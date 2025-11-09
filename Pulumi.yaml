@@ -1,0 +1,13 @@
+name: archbtw
+description: A module for provisioning an Arch VM with libvirt
+runtime: go
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: go
+packages:
+  libvirt:
+    source: terraform-provider
+    version: 1.0.1
+    parameters:
+      - dmacvicar/libvirt
