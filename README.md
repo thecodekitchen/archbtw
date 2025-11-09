@@ -1,4 +1,5 @@
-Pulumi Libvirt Arch VM Creator
+# Pulumi Libvirt Arch VM Creator
+
 This project uses Pulumi and Go to declaratively provision a local Arch Linux virtual machine on a Linux host using KVM/QEMU and Libvirt.
 
 The main.go file defines a Pulumi program that:
@@ -58,6 +59,7 @@ sudo virsh pool-start default
 
 # Set the pool to autostart on boot
 sudo virsh pool-autostart default
+
 5. Configure the default Network
 The VM needs a network to connect to. We will start the default NAT network.
 
@@ -68,6 +70,7 @@ sudo virsh net-start default
 
 # Set the network to autostart on boot
 sudo virsh net-autostart default
+
 6. Fix AppArmor Permissions
 By default, Ubuntu's AppArmor security module will block the VM from reading the disk image we download. We must add an exception.
 
@@ -79,6 +82,7 @@ sudo nano /etc/apparmor.d/abstractions/libvirt-qemu
 2. Add the new line: Scroll to the bottom of the file and add the following line before the final closing }:
 
   /var/lib/libvirt/images/** rwk,
+
 3. Restart the services: Reload AppArmor and restart libvirtd to apply the changes.
 
 Bash
@@ -93,11 +97,13 @@ Once your host is set up, running the project is simple.
 Bash
 
 pulumi config set libvirt:uri qemu:///system
+
 2. Install Go Dependencies:
 
 Bash
 
 go mod tidy
+
 3. Deploy the VM:
 
 Bash
@@ -112,6 +118,7 @@ Outputs:
     ip: [
         [0]: "192.168.122.239"
     ]
+
 You can now SSH into your new Arch VM as the arch user:
 
 Bash
@@ -124,6 +131,7 @@ Once inside, you can test your sudo access (which is passwordless):
 Bash
 
 sudo pacman -Syu
+
 🧹 Cleaning Up
 When you are finished with the VM, you can destroy all resources with a single command:
 
